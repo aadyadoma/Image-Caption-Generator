@@ -4,6 +4,17 @@ async function uploadImage() {
   const formData = new FormData();
   formData.append("image", file);
 
+  const imagePreview = document.getElementById("imagePreview");
+  const reader = new FileReader();
+  
+  reader.onloadend = () => {
+    imagePreview.src = reader.result;
+  };
+
+  if (file) {
+    reader.readAsDataURL(file);
+  }
+
   try {
     const res = await fetch("http://localhost:5000/caption", {
       method: "POST",
